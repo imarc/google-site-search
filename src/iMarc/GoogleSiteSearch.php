@@ -16,6 +16,7 @@ namespace iMarc;
  *
  * @copyright iMarc LLC 2013
  * @author Jeff Turcotte <jeff@imarc.net>
+ * @version 1.0.0
  *
  * @license MIT
 **/
