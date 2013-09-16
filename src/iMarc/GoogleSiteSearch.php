@@ -74,10 +74,10 @@ class GoogleSiteSearch
 		$url = 'http://www.google.com/search?' . http_build_query($params);
 		$source = file_get_contents($url);
 
-		$document = new DomDocument();
+		$document = new \DomDocument();
 		$document->loadXml($source);
-		$xpath = new DOMXpath($document);
-		$results = new stdClass();
+		$xpath = new \DOMXpath($document);
+		$results = new \stdClass();
 
 		$results->page = $page;
 		$results->start = $xpath->evaluate('string(//RES/@SN)');
