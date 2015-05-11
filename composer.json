@@ -1,21 +1,25 @@
 {
-	"name": "imarc/google-site-search",
-	"type": "library",
-	"description": "A PHP Interface to the Google Custom Search XML API",
-	"keywords": ["google", "search"],
-	"license": "MIT",
-	"authors": [
-		{
-			"name": "Jeff Turcotte",
-			"email": "jeff@imarc.net"
-		}
-	],
-	"require": {
-		"php": ">=5.2.0"
-	},
-	"autoload": {
-		"psr-0": {
-			"iMarc": "src/"
-		}
-	}
+    "name": "imarc/google-site-search",
+    "type": "library",
+    "description": "A PHP Interface to the Google Custom Search API",
+    "keywords": ["google", "search"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jeff Turcotte",
+            "email": "jeff@imarc.net"
+        },
+        {
+            "name": "Dan Collins",
+            "email": "dan@imarc.net"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "iMarc\\": "src/"
+        }
+    }
 }
