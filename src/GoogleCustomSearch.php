@@ -83,9 +83,10 @@ class GoogleCustomSearch
      * Returns an object with the following properties:
      *
      *   page
+     *   perPage
      *   start
      *   end
-     *   total_results
+     *   totalResults
      *   results
      *     title
      *     snippet
@@ -125,9 +126,10 @@ class GoogleCustomSearch
         
         $results = new \stdClass();
         $results->page = $page;
+        $results->perPage = $per_page;
         $results->start = $request_info->startIndex;
         $results->end = ($request_info->startIndex + $request_info->count) - 1;
-        $results->total_results = $request_info->totalResults;
+        $results->totalResults = $request_info->totalResults;
         $results->results = [];
 
         if (isset($response->items)) {
