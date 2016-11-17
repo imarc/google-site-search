@@ -145,6 +145,8 @@ class GoogleCustomSearch
     /**
      * Allow call to api under https using cURL - replacement function for file_get_contents
      * By setting CURLOPT_RETURNTRANSFER to true we're able to fetch the results via cURL
+     * @param string $url
+     * @return Object $results
      */
     public function getSslPage($url) {
         $ch = curl_init();
