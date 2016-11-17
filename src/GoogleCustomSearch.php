@@ -65,15 +65,9 @@ class GoogleCustomSearch
                 'cx' => $this->search_engine_id
             ]
         );
-        
-        $context = stream_context_create([
-            'http' => [
-                'ignore_errors' => true
-            ]
-        ]);
 
         return json_decode(
-            file_get_contents('https://www.googleapis.com/customsearch/v1?' . http_build_query($params), false, $context)
+            $this->getSslPage('https://www.googleapis.com/customsearch/v1?' . http_build_query($params))
         );
     }
 
@@ -146,5 +140,22 @@ class GoogleCustomSearch
         }
         
         return $results;
+    }
+
+    /**
+     * Allow call to api under https using cURL - replacement function for file_get_contents
+     * By setting CURLOPT_RETURNTRANSFER to true we're able to fetch the results via cURL
+     */
+    public function getSslPage($url) {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+        curl_setopt($ch, CURLOPT_HEADER, false);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_REFERER, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        $result = curl_exec($ch);
+        curl_close($ch);
+        return $result;
     }
 }
