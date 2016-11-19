@@ -66,9 +66,25 @@ class GoogleCustomSearch
             ]
         );
 
-        return json_decode(
-            $this->getSslPage('https://www.googleapis.com/customsearch/v1?' . http_build_query($params))
-        );
+        // disable peer verification
+        $context = stream_context_create([
+            'http' => [
+                'ignore_errors' => true
+            ],
+            'ssl' => [
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+            ]
+        ]);
+
+        // use cURL if avaible, otherwise fallback to file_get_contents
+        if (function_exists('curl_version')) {
+            $response = $this->getSslPage('https://www.googleapis.com/customsearch/v1?' . http_build_query($params));
+        } else {
+            $response = file_get_contents('https://www.googleapis.com/customsearch/v1?' . http_build_query($params), false, $context)
+        }
+
+        return json_decode($response);
     }
 
     /**
