@@ -18,7 +18,7 @@ namespace iMarc;
  * @author Jeff Turcotte <jeff@imarc.net>
  * @author Dan Collins <dan@imarc.net>
  * @version 2.0.0
- * 
+ *
  * @license MIT
 **/
 class GoogleCustomSearch
@@ -56,7 +56,7 @@ class GoogleCustomSearch
      * @param array params The parameters of the search request
      * @return object The raw results of the search request
      **/
-    private function request($params) 
+    private function request($params)
     {
         $params = array_merge(
             $params,
@@ -81,7 +81,7 @@ class GoogleCustomSearch
         if (function_exists('curl_version')) {
             $response = $this->getSslPage('https://www.googleapis.com/customsearch/v1?' . http_build_query($params));
         } else {
-            $response = file_get_contents('https://www.googleapis.com/customsearch/v1?' . http_build_query($params), false, $context)
+            $response = file_get_contents('https://www.googleapis.com/customsearch/v1?' . http_build_query($params), false, $context);
         }
 
         return json_decode($response);
@@ -116,7 +116,7 @@ class GoogleCustomSearch
     {
         // Google only allows 10 results at a time
         $per_page = ($per_page > 10) ? 10 : $per_page;
-        
+
         $params = [
             'q' => $terms,
             'start' => (($page - 1) * $per_page) + 1,
@@ -131,9 +131,9 @@ class GoogleCustomSearch
         if (isset($response->error)) {
             throw new \Exception($response->error->message);
         }
-        
+
         $request_info = $response->queries->request[0];
-        
+
         $results = new \stdClass();
         $results->page = $page;
         $results->perPage = $per_page;
@@ -152,9 +152,9 @@ class GoogleCustomSearch
                     'image' => isset($result->pagemap->cse_image) ? $result->pagemap->cse_image[0]->src : '',
                     'thumbnail' => isset($result->pagemap->cse_thumbnail) ? $result->pagemap->cse_thumbnail[0]->src : '',
                 ];
-            }   
+            }
         }
-        
+
         return $results;
     }
 
