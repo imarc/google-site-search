@@ -105,9 +105,9 @@ class GoogleCustomSearch
         );
         // use cURL if avaible, otherwise fallback to file_get_contents
         if (function_exists('curl_version')) {
-            $response = $this->getSslPage('https://www.googleapis.com/customsearch/v1?' . http_build_query($params));
+            $response = $this->getSslPage('https://www.googleapis.com/customsearch/v1?' . $api_url);
         } else {
-            $response = file_get_contents('https://www.googleapis.com/customsearch/v1?' . http_build_query($params), false, $context);
+            $response = file_get_contents('https://www.googleapis.com/customsearch/v1?' . $api_url, false, $context);
         }
 
         return json_decode($response);
