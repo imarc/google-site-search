@@ -76,7 +76,33 @@ class GoogleCustomSearch
                 'verify_peer_name' => false,
             ]
         ]);
+        
+        // to deal with prob with `date range`
+        // `sort=date:r:date_1:date_2`
+        $api_url = 'https://www.googleapis.com/customsearch/v1?';
+        
+        foreach (
+            $params as $key => $param
+        ) {
+            $query = $key !== 'q'?
+            "{$key}=" . "{$param}"
+            : "{$key}=" . urlencode(
+                $param
+            );
 
+            $api_url .= $api_url[
+                strlen($api_url) - 1
+            ] === '?'? $query
+            : "&{$query}";
+        }
+        
+        return json_decode(
+            file_get_contents(
+                $api_url, 
+                false, 
+                $context
+            )
+        );
         // use cURL if avaible, otherwise fallback to file_get_contents
         if (function_exists('curl_version')) {
             $response = $this->getSslPage('https://www.googleapis.com/customsearch/v1?' . http_build_query($params));
